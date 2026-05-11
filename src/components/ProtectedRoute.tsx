@@ -1,9 +1,9 @@
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import { useAppStore, UserRole } from '../store/useAppStore';
 
 interface ProtectedRouteProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   allowedRole?: UserRole;
 }
 
@@ -25,7 +25,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRole }
     return <Navigate to={redirectPath} replace />;
   }
 
-  return <>{children}</>;
+  return <>{children || <Outlet />}</>;
 };
 
 export default ProtectedRoute;

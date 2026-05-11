@@ -12,6 +12,7 @@ const Layout: React.FC = () => {
   const { user, themeMode, toggleThemeMode } = useAppStore();
   
   const [value, setValue] = React.useState(location.pathname);
+  const [inboxOpen, setInboxOpen] = React.useState(false);
 
   React.useEffect(() => {
     setValue(location.pathname);
