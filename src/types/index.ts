@@ -28,3 +28,24 @@ export interface Notification {
   type: 'grade' | 'assignment' | 'alert' | 'event';
   read: boolean;
 }
+
+// QR Attendance token and related types
+export interface QRTokenPayload {
+  batchId: string;
+  subjectId: string;
+  timestamp: number; // epoch ms
+  expiry: number; // epoch ms
+}
+
+export interface AttendancePayload {
+  studentId: string;
+  token: string; // signed QR token
+}
+
+export interface AttendanceResult {
+  success: boolean;
+  message?: string;
+  subjectId?: string;
+  updatedPercentage?: number;
+  timestamp?: number;
+}
