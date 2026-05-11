@@ -1,12 +1,9 @@
 import { Request, Response } from 'express';
-import admin from 'firebase-admin';
-import { Announcement } from '../../src/types';
-
-const db = admin.firestore();
+import admin, { db } from '../firebase';
 
 export const createAnnouncement = async (req: Request, res: Response) => {
   try {
-    const announcementData: Omit<Announcement, 'id'> = req.body;
+    const announcementData: any = req.body;
     
     const docRef = await db.collection('announcements').add({
       ...announcementData,

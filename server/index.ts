@@ -1,25 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import admin from 'firebase-admin';
+import './firebase'; // Initialize Firebase first
 import timetableRoutes from './routes/timetable';
 import announcementRoutes from './routes/announcements';
 
-dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-// Initialize Firebase Admin
-if (!admin.apps.length) {
-  try {
-    admin.initializeApp({
-      credential: admin.credential.applicationDefault(),
-    });
-  } catch (error) {
-    console.log('Firebase Admin init error (falling back to mock/no-auth):', error);
-  }
-}
 
 app.use(cors());
 app.use(express.json());

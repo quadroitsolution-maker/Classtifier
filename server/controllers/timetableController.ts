@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-import admin from 'firebase-admin';
-
-const db = admin.firestore?.();
+import { db } from '../firebase';
 
 export const getSchedule = async (req: Request, res: Response) => {
   try {
