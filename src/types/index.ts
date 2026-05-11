@@ -7,8 +7,15 @@ export interface Course {
   endTime: string;
   location: string;
   instructor?: string;
+  facultyImage?: string;
   color: string;
   status?: 'Completed' | 'Upcoming' | 'Active';
+  isCancelled?: boolean;
+  attendance?: number;
+  nextClass?: {
+    time: string;
+    location: string;
+  };
 }
 
 export interface AttendanceRecord {
