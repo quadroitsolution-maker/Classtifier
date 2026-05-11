@@ -1,0 +1,110 @@
+/* Timetable Container */
+.timetable-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Weekday Strip */
+.weekday-strip {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+.weekday-item {
+  flex: 0 0 auto;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #222;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+.weekday-item:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Grid Container */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  transition: all 0.4s ease;
+}
+
+/* Class Card */
+.class-card {
+  position: relative;
+  padding: 1rem;
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.class-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+.class-card.current {
+  outline: 3px solid #ffeb3b;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { outline-color: #ffeb3b; }
+  50% { outline-color: #ffd600; }
+  100% { outline-color: #ffeb3b; }
+}
+.class-card.cancelled {
+  filter: grayscale(80%);
+  opacity: 0.6;
+}
+.class-card .subject {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.class-card .time {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+.class-card .cancelled-label {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(0,0,0,0.4);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+/* Skeleton Loading */
+.timetable-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.skeleton-row {
+  height: 80px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .weekday-item { font-size: 0.85rem; }
+  .class-card { padding: 0.75rem; }
+}
