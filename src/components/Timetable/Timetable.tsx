@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
-import { db } from '../../firebaseConfig'; // assume firebase is initialized
+import { db } from '../../config/firebase';
 import { format, isToday, isSameDay } from 'date-fns';
 import SubjectDetailSheet from './SubjectDetailSheet';
 import TimetableFilter from './TimetableFilter';

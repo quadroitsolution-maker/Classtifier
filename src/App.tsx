@@ -50,100 +50,100 @@ export default function App() {
       <CssBaseline />
       <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', transition: 'background-color 0.3s ease' }}>
         <BrowserRouter>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Splash />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/onboarding" element={<Onboarding />} />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Splash />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/onboarding" element={<Onboarding />} />
 
-          {/* Protected Main App Routes */}
-          <Route element={<Layout />}>
-            <Route 
-              path="/student-dashboard" 
-              element={
-                <ProtectedRoute allowedRole="student">
-                  <StudentDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/teacher-dashboard" 
-              element={
-                <ProtectedRoute allowedRole="teacher">
-                  <TeacherDashboard />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/manage-students" 
-              element={
-                <ProtectedRoute allowedRole="teacher">
-                  <ManageStudents />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/schedule" 
-              element={
-                <ProtectedRoute>
-                  <Schedule />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/notifications" 
-              element={
-                <ProtectedRoute>
-                  <Notifications />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/stats" 
-              element={
-                <ProtectedRoute>
-                  <Stats />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/recovery-plan" 
-              element={
-                <ProtectedRoute>
-                  <RecoveryPlan />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/profile" 
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } 
-            />
-             <Route 
-              path="/chat" 
-              element={
-                <ProtectedRoute>
-                  <Chatbot />
-                </ProtectedRoute>
-              } 
-            />
-          </Route>
-          {/* QR Attendance routes */}
-          <Route element={<ProtectedRoute allowedRole="teacher"/>}>
-            <Route path="/teacher-qr" element={<TeacherQR/>} />
-          </Route>
-          <Route element={<ProtectedRoute allowedRole="student"/>}>
-            <Route path="/scan" element={<StudentScan/>} />
-          </Route>
-          <Route path="/attendance-success" element={<AttendanceSuccessScreen/>} />
+            {/* Protected Main App Routes */}
+            <Route element={<Layout />}>
+              <Route
+                path="/student-dashboard"
+                element={
+                  <ProtectedRoute allowedRole="student">
+                    <StudentDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/teacher-dashboard"
+                element={
+                  <ProtectedRoute allowedRole="teacher">
+                    <TeacherDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/manage-students"
+                element={
+                  <ProtectedRoute allowedRole="teacher">
+                    <ManageStudents />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/schedule"
+                element={
+                  <ProtectedRoute>
+                    <Schedule />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/notifications"
+                element={
+                  <ProtectedRoute>
+                    <Notifications />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/stats"
+                element={
+                  <ProtectedRoute>
+                    <Stats />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/recovery-plan"
+                element={
+                  <ProtectedRoute>
+                    <RecoveryPlan />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chat"
+                element={
+                  <ProtectedRoute>
+                    <Chatbot />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            {/* QR Attendance routes */}
+            <Route element={<ProtectedRoute allowedRole="teacher" children={''} />}>
+              <Route path="/teacher-qr" element={<TeacherQR />} />
+            </Route>
+            <Route element={<ProtectedRoute allowedRole="student" children={''} />}>
+              <Route path="/scan" element={<StudentScan />} />
+            </Route>
+            <Route path="/attendance-success" element={<AttendanceSuccessScreen />} />
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
       </Box>
     </ThemeProvider>
   );
