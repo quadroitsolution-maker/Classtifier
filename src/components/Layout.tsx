@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, BottomNavigation, BottomNavigationAction, Paper, AppBar, Toolbar, Typography, Avatar, IconButton, Badge, Tooltip, Chip } from '@mui/material';
-import { Home, CalendarToday, Notifications, BarChart, Person, SmartToy, DarkMode, LightMode, People } from '@mui/icons-material';
+import { Home, CalendarToday, Notifications, BarChart, Person, SmartToy, DarkMode, LightMode, People, Science } from '@mui/icons-material';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -20,6 +20,7 @@ const Layout: React.FC = () => {
   const navItems = [
     { label: 'Home', icon: <Home />, path: user?.role === 'student' ? '/student-dashboard' : '/teacher-dashboard' },
     { label: 'Schedule', icon: <CalendarToday />, path: '/schedule' },
+    { label: 'Labs', icon: <Science />, path: '/labs' },
     { label: 'Inbox', icon: <Notifications />, path: '/notifications' },
     ...(user?.role === 'teacher' ? [
       { label: 'Students', icon: <People />, path: '/manage-students' },

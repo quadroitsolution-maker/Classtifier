@@ -78,3 +78,27 @@ export interface AttendanceResult {
   updatedPercentage?: number;
   timestamp?: number;
 }
+
+export interface EquipmentItem {
+  id: string;
+  name: string;
+  required: boolean;
+  checked?: boolean;
+}
+
+export interface LabSession extends Course {
+  supervisor: string;
+  roomMapUrl: string;
+  instructionsUrl: string;
+  preLabReading: string;
+  equipment: EquipmentItem[];
+  labGroup?: string;
+}
+
+export interface LabAttendanceRecord {
+  studentId: string;
+  labId: string;
+  timestamp: string;
+  status: 'Present' | 'Late' | 'Absent';
+  sessionSummary?: string;
+}

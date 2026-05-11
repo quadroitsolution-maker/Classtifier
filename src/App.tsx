@@ -23,6 +23,7 @@ import ManageStudents from './pages/ManageStudents';
 import RecoveryPlan from './pages/RecoveryPlan';
 import TeacherQR from './pages/TeacherQR';
 import StudentScan from './pages/StudentScan';
+import LabDashboard from './pages/LabDashboard';
 import AttendanceSuccessScreen from './components/ui/AttendanceSuccessScreen';
 
 // FCM foreground listener
@@ -87,6 +88,14 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <Schedule />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/labs"
+                element={
+                  <ProtectedRoute>
+                    <LabDashboard />
                   </ProtectedRoute>
                 }
               />
