@@ -8,11 +8,16 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRole }) => {
-  const { isAuthenticated, user } = useAppStore();
+  const { isAuthenticated, user, onboardingComplete } = useAppStore();
   const location = useLocation();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // If not onboarded, redirect to onboarding
+  if (!onboardingComplete && !user?.onboardingComplete) {
+    return <Navigate to="/onboarding" replace />;
   }
 
   if (allowedRole && user?.role !== allowedRole) {

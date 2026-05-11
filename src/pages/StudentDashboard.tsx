@@ -4,13 +4,30 @@ import { NotificationsNone, KeyboardArrowRight, SmartToy, CheckCircle, AccessTim
 import { useAppStore } from '../store/useAppStore';
 import CourseCard from '../components/ui/CourseCard';
 import AttendanceWidget from '../components/ui/AttendanceWidget';
+import RiskBanner from '../components/ui/RiskBanner';
 import { MOCK_ATTENDANCE, MOCK_COURSE_HISTORY } from '../constants/mockData';
 import { WEEKLY_SCHEDULE } from '../constants/timetable';
+import { assessOverallRisk, OverallRisk } from '../services/riskService';
+import { generateRiskNotification } from '../services/riskNotificationService';
 import { motion } from 'framer-motion';
 
 const StudentDashboard: React.FC = () => {
   const { user } = useAppStore();
-  
+  const [overallRisk, setOverallRisk] = React.useState<OverallRisk | null>(null);
+  const [aiMessage, setAiMessage] = React.useState<string | null>(null);
+
+  // Calculate risk and generate AI notification on mount
+  React.useEffect(() => {
+    const risk = assessOverallRisk(MOCK_ATTENDANCE);
+    setOverallRisk(risk);
+
+    if (risk.overallLevel !== 'safe') {
+      generateRiskNotification(user?.name || 'Student', risk)
+        .then(setAiMessage)
+        .catch(() => {});
+    }
+  }, [user?.name]);
+
   // Get today's schedule (Monday for demo if weekend)
   const currentDay = Math.max(0, Math.min(4, new Date().getDay() - 1));
   const section = 'Section 1'; // Default section
@@ -19,7 +36,7 @@ const StudentDashboard: React.FC = () => {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box>
           <Typography variant="h5" sx={{ fontWeight: 800 }}>
             Hi {user?.name.split(' ')[0]} 👋
@@ -32,6 +49,9 @@ const StudentDashboard: React.FC = () => {
           <NotificationsNone />
         </IconButton>
       </Box>
+
+      {/* Risk Alert Banner */}
+      {overallRisk && <RiskBanner risk={overallRisk} aiMessage={aiMessage} />}
 
       {/* Next Class Hero */}
       {nextClass && (

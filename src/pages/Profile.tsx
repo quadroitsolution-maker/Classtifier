@@ -3,12 +3,14 @@ import { Box, Typography, Container, Button, Stack, Chip, Card, CardContent, Ico
 import { Settings, ExitToApp, KeyboardArrowRight, Security, Info, Help, DarkMode, Notifications } from '@mui/icons-material';
 import { useAppStore } from '../store/useAppStore';
 import { useNavigate } from 'react-router-dom';
+import { signOut } from '../services/firebaseAuth';
 
 const Profile: React.FC = () => {
   const { user, logout, themeMode, toggleThemeMode } = useAppStore();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try { await signOut(); } catch (e) { /* ignore */ }
     logout();
     navigate('/');
   };
