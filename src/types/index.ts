@@ -49,6 +49,28 @@ export interface AttendancePayload {
   token: string; // signed QR token
 }
 
+export interface Attachment {
+  id: string;
+  name: string;
+  url: string;
+  type: string;
+  size: number;
+}
+
+export interface Announcement {
+  id: string;
+  title: string;
+  body: string;
+  teacherId: string;
+  teacherName: string;
+  classId: string;
+  className: string;
+  createdAt: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  attachments: Attachment[];
+  tags?: string[];
+}
+
 export interface AttendanceResult {
   success: boolean;
   message?: string;
