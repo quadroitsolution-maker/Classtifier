@@ -1,13 +1,15 @@
 import React from 'react';
-import { Box, Typography, Grid, Card, CardContent, Button, Stack, Chip, IconButton, LinearProgress, Avatar, AvatarGroup, Paper } from '@mui/material';
-import { Notifications, KeyboardArrowRight, Add, EventNote, People, BarChart } from '@mui/icons-material';
+import { Box, Typography, Grid, Card, CardContent, Button, Stack, Chip, IconButton, LinearProgress, Avatar, AvatarGroup, Paper, Tooltip } from '@mui/material';
+import { Notifications, KeyboardArrowRight, Add, EventNote, People, BarChart, Science } from '@mui/icons-material';
 import { useAppStore } from '../store/useAppStore';
 import CourseCard from '../components/ui/CourseCard';
 import { WEEKLY_SCHEDULE } from '../constants/timetable';
 import { motion } from 'framer-motion';
+import { AnnouncementComposer } from '../components/ui/AnnouncementComposer';
 
 const TeacherDashboard: React.FC = () => {
   const { user } = useAppStore();
+  const [composerOpen, setComposerOpen] = React.useState(false);
   
   const currentDay = Math.max(0, Math.min(4, new Date().getDay() - 1));
   const section = 'Section 1'; // Default section
@@ -98,6 +100,37 @@ const TeacherDashboard: React.FC = () => {
         </Stack>
       </Box>
 
+      {/* Lab Management */}
+      <Card sx={{ mb: 4, bgcolor: 'teal', color: 'white', borderRadius: 8 }}>
+        <CardContent sx={{ p: 3 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>Active Lab Session</Typography>
+            <Science />
+          </Box>
+          <Typography variant="body2" sx={{ mb: 2, opacity: 0.9 }}>
+            CHM302: Advanced Chemistry Lab (Section A)
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button 
+              variant="contained" 
+              sx={{ bgcolor: 'white', color: 'teal', fontWeight: 800, '&:hover': { bgcolor: '#f0f0f0' } }}
+              onClick={() => {
+                fetch('http://localhost:5000/api/labs/lab-101/complete', {
+                  method: 'PATCH',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ summary: 'Successful titration experiment completed by 24/25 students.' })
+                }).then(() => alert('Lab Session Completed & Records Updated'));
+              }}
+            >
+              End Session
+            </Button>
+            <Button variant="outlined" sx={{ borderColor: 'white', color: 'white', fontWeight: 700 }}>
+              View Analytics
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+
       {/* Pending Tasks */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 800 }}>Pending Tasks</Typography>
@@ -118,7 +151,7 @@ const TeacherDashboard: React.FC = () => {
       </Box>
 
       {/* Student Overview Widget */}
-      <Card sx={{ mt: 4, mb: 2, bgcolor: 'secondary.main', color: 'white' }}>
+      <Card sx={{ mt: 4, mb: 2, bgcolor: 'secondary.main', color: 'white', borderRadius: 8 }}>
         <CardContent sx={{ p: 3 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
             <Typography variant="h6" sx={{ fontWeight: 700 }}>Class Attendance</Typography>
@@ -147,6 +180,35 @@ const TeacherDashboard: React.FC = () => {
           </AvatarGroup>
         </CardContent>
       </Card>
+
+      {/* FAB and Composer */}
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        style={{ position: 'fixed', bottom: 32, right: 32, zIndex: 1000 }}
+      >
+        <Tooltip title="Create Announcement">
+          <IconButton
+            onClick={() => setComposerOpen(true)}
+            sx={{
+              width: 56,
+              height: 56,
+              bgcolor: 'primary.main',
+              color: 'white',
+              boxShadow: '0 8px 24px rgba(99, 102, 241, 0.4)',
+              '&:hover': { bgcolor: 'primary.dark' }
+            }}
+          >
+            <Add sx={{ fontSize: 32 }} />
+          </IconButton>
+        </Tooltip>
+      </motion.div>
+
+      <AnnouncementComposer 
+        open={composerOpen} 
+        onClose={() => setComposerOpen(false)} 
+        onSuccess={(a) => console.log('Announcement posted:', a)}
+      />
     </Box>
   );
 };

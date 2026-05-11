@@ -7,8 +7,15 @@ export interface Course {
   endTime: string;
   location: string;
   instructor?: string;
+  facultyImage?: string;
   color: string;
   status?: 'Completed' | 'Upcoming' | 'Active';
+  isCancelled?: boolean;
+  attendance?: number;
+  nextClass?: {
+    time: string;
+    location: string;
+  };
 }
 
 export interface AttendanceRecord {
@@ -42,10 +49,56 @@ export interface AttendancePayload {
   token: string; // signed QR token
 }
 
+export interface Attachment {
+  id: string;
+  name: string;
+  url: string;
+  type: string;
+  size: number;
+}
+
+export interface Announcement {
+  id: string;
+  title: string;
+  body: string;
+  teacherId: string;
+  teacherName: string;
+  classId: string;
+  className: string;
+  createdAt: string;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  attachments: Attachment[];
+  tags?: string[];
+}
+
 export interface AttendanceResult {
   success: boolean;
   message?: string;
   subjectId?: string;
   updatedPercentage?: number;
   timestamp?: number;
+}
+
+export interface EquipmentItem {
+  id: string;
+  name: string;
+  required: boolean;
+  checked?: boolean;
+}
+
+export interface LabSession extends Course {
+  supervisor: string;
+  roomMapUrl: string;
+  instructionsUrl: string;
+  preLabReading: string;
+  equipment: EquipmentItem[];
+  labGroup?: string;
+}
+
+export interface LabAttendanceRecord {
+  studentId: string;
+  labId: string;
+  timestamp: string;
+  status: 'Present' | 'Late' | 'Absent';
+  sessionSummary?: string;
 }

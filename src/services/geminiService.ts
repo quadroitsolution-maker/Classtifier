@@ -49,3 +49,12 @@ STRICT RULES:
     return "I'm having trouble connecting to my brain right now. Please try again later.";
   }
 };
+
+export const improveAnnouncementTone = async (text: string) => {
+  const prompt = `Improve the tone of the following teacher's announcement to be more professional, encouraging, and clear. 
+  Keep the length similar, but make it sound more "premium" and engaging for students.
+  
+  Announcement: "${text}"`;
+  
+  return getGeminiResponse(prompt);
+};

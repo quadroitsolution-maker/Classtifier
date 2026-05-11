@@ -10,136 +10,39 @@ import { WEEKLY_SCHEDULE } from '../constants/timetable';
 import { assessOverallRisk, OverallRisk } from '../services/riskService';
 import { generateRiskNotification } from '../services/riskNotificationService';
 import { motion } from 'framer-motion';
+import { AnnouncementFeed } from '../components/ui/AnnouncementFeed';
+import { Announcement } from '../types';
 
 const StudentDashboard: React.FC = () => {
   const { user } = useAppStore();
   const [overallRisk, setOverallRisk] = React.useState<OverallRisk | null>(null);
   const [aiMessage, setAiMessage] = React.useState<string | null>(null);
+  const [announcements, setAnnouncements] = React.useState<Announcement[]>([]);
+
+  // Fetch announcements
+  React.useEffect(() => {
+    fetch('http://localhost:5000/api/announcements')
+      .then(res => res.json())
+      .then(data => setAnnouncements(data))
+      .catch(err => console.error('Error fetching announcements:', err));
+  }, []);
 
   // Calculate risk and generate AI notification on mount
-  React.useEffect(() => {
-    const risk = assessOverallRisk(MOCK_ATTENDANCE);
-    setOverallRisk(risk);
-
-    if (risk.overallLevel !== 'safe') {
-      generateRiskNotification(user?.name || 'Student', risk)
-        .then(setAiMessage)
-        .catch(() => {});
-    }
-  }, [user?.name]);
-
-  // Get today's schedule (Monday for demo if weekend)
-  const currentDay = Math.max(0, Math.min(4, new Date().getDay() - 1));
-  const section = 'Section 1'; // Default section
-  const todaySchedule = WEEKLY_SCHEDULE[section][currentDay] || [];
-  const nextClass = todaySchedule.find(e => e.type !== 'Break') || todaySchedule[0];
-
-  return (
-    <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Box>
-          <Typography variant="h5" sx={{ fontWeight: 800 }}>
-            Hi {user?.name.split(' ')[0]} 👋
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {new Date().toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })}
-          </Typography>
-        </Box>
-        <IconButton sx={{ bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider' }}>
-          <NotificationsNone />
-        </IconButton>
-      </Box>
-
-      {/* Risk Alert Banner */}
-      {overallRisk && <RiskBanner risk={overallRisk} aiMessage={aiMessage} />}
-
-      {/* Next Class Hero */}
-      {nextClass && (
-        <Card sx={{ 
-          mb: 4, 
-          bgcolor: 'secondary.main', 
-          color: 'white',
-          borderRadius: 8,
-          overflow: 'hidden',
-          position: 'relative',
-          boxShadow: '0 20px 40px rgba(30, 27, 75, 0.2)'
-        }}>
-          <CardContent sx={{ p: 3, position: 'relative', zIndex: 1 }}>
-            <Chip label="NEXT UP" size="small" sx={{ bgcolor: 'primary.main', color: 'white', fontWeight: 800, fontSize: '0.6rem', mb: 2 }} />
-            <Typography variant="h4" sx={{ fontWeight: 800, mb: 1, color: 'white' }}>{nextClass.name}</Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, opacity: 0.8 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <AccessTime sx={{ fontSize: '1rem' }} />
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>{nextClass.startTime} - {nextClass.endTime}</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <LocationOn sx={{ fontSize: '1rem' }} />
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>{nextClass.location}</Typography>
-              </Box>
-            </Box>
-          </CardContent>
-          <Box sx={{ 
-            position: 'absolute', 
-            right: -40, 
-            bottom: -40, 
-            width: 200, 
-            height: 200, 
-            bgcolor: 'primary.main', 
-            borderRadius: '50%',
-            opacity: 0.1,
-            filter: 'blur(40px)'
-          }} />
-        </Card>
-      )}
-
-      {/* Attendance Snapshot */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: 800 }}>Attendance Snapshot</Typography>
-        <Paper elevation={0} sx={{ p: 3, bgcolor: 'background.paper', borderRadius: 8, border: '1px solid', borderColor: 'divider' }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-around', gap: 2 }}>
-            {MOCK_ATTENDANCE.map((record) => (
-              <AttendanceWidget 
-                key={record.courseId}
-                label={record.courseName.split(' ')[0]}
-                percentage={record.percentage}
-                color={record.color}
-              />
-            ))}
-          </Box>
-        </Paper>
-      </Box>
-
-      {/* Today's Schedule */}
-      <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>Today's Schedule</Typography>
-          <Button size="small" endIcon={<KeyboardArrowRight />}>View All</Button>
-        </Box>
-        <Stack spacing={2}>
-          {todaySchedule.filter(e => e.type !== 'Break').map((entry, idx) => (
-            <motion.div
-              key={entry.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.1 }}
-            >
-              <CourseCard course={{
-                id: entry.id,
-                name: entry.name,
-                code: entry.id.startsWith('training') ? 'TRAIN' : (entry.name.length > 20 ? entry.name.split(' ').map(w => w[0]).join('').toUpperCase() : 'LECT'),
-                type: entry.type as any,
-                startTime: entry.startTime,
-                endTime: entry.endTime,
-                location: entry.location,
-                instructor: entry.instructor,
-                color: entry.color,
-              }} />
-            </motion.div>
-          ))}
+[... lines 19-140 unchanged ...]
         </Stack>
       </Box>
 
+      {/* Announcements Feed */}
+      <Box sx={{ mb: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+          <Typography variant="h6" sx={{ fontWeight: 800 }}>Recent Announcements</Typography>
+          <Button size="small">See All</Button>
+        </Box>
+        <AnnouncementFeed announcements={announcements} />
+      </Box>
+
       {/* Course History Section */}
+[... lines 142-207 unchanged ...]
       <Box sx={{ mb: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Typography variant="h6" sx={{ fontWeight: 800 }}>Course History</Typography>
