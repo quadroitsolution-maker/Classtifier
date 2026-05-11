@@ -41,9 +41,11 @@ export const MOCK_COURSES: Course[] = [
 
 export const MOCK_ATTENDANCE: AttendanceRecord[] = [
   { courseId: 'cf', courseName: 'Cloud Foundations', percentage: 88, attended: 22, total: 25, color: '#6366F1' },
-  { courseId: 'sp', courseName: 'Semiconductor Physics', percentage: 76, attended: 19, total: 25, color: '#10B981' },
+  { courseId: 'sp', courseName: 'Semiconductor Physics', percentage: 68, attended: 17, total: 25, color: '#10B981' },
   { courseId: 'oops', courseName: 'OOPs with Java', percentage: 92, attended: 23, total: 25, color: '#EC4899' },
-  { courseId: 'stats', courseName: 'Statistics', percentage: 80, attended: 20, total: 25, color: '#06B6D4' }
+  { courseId: 'stats', courseName: 'Statistics', percentage: 80, attended: 20, total: 25, color: '#06B6D4' },
+  { courseId: 'dsa', courseName: 'Data Structures', percentage: 52, attended: 13, total: 25, color: '#F59E0B' },
+  { courseId: 'dbms', courseName: 'Database Systems', percentage: 72, attended: 18, total: 25, color: '#8B5CF6' },
 ];
 
 export interface CompletedCourse {
