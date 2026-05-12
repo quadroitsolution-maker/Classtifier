@@ -10,7 +10,7 @@ const Layout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, themeMode, toggleThemeMode } = useAppStore();
-  
+
   const [value, setValue] = React.useState(location.pathname);
 
   React.useEffect(() => {
@@ -28,18 +28,20 @@ const Layout: React.FC = () => {
     { label: 'Profile', icon: <Person />, path: '/profile' },
   ];
 
+  const [inboxOpen, setInboxOpen] = React.useState(false);
+
   return (
     <Box sx={{ pb: 7, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <AppBar position="sticky" elevation={0} sx={{ bgcolor: 'background.default', borderBottom: '1px solid #E2E8F0' }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Box component="span" sx={{ 
-              width: 32, 
-              height: 32, 
-              bgcolor: 'primary.main', 
-              borderRadius: '10px', 
-              display: 'flex', 
-              alignItems: 'center', 
+            <Box component="span" sx={{
+              width: 32,
+              height: 32,
+              bgcolor: 'primary.main',
+              borderRadius: '10px',
+              display: 'flex',
+              alignItems: 'center',
               justifyContent: 'center',
               boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)'
             }}>
@@ -49,7 +51,7 @@ const Layout: React.FC = () => {
               Classtifier
             </Typography>
           </Box>
-          
+
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Tooltip title={`Switch to ${themeMode === 'light' ? 'dark' : 'light'} mode`}>
               <IconButton onClick={toggleThemeMode} sx={{ color: 'text.secondary' }}>
@@ -105,8 +107,8 @@ const Layout: React.FC = () => {
             setValue(newValue);
             navigate(newValue);
           }}
-          sx={{ 
-            height: 72, 
+          sx={{
+            height: 72,
             bgcolor: 'background.paper',
             borderTop: '1px solid #E2E8F0',
             '& .MuiBottomNavigationAction-root': {
