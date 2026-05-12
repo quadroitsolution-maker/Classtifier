@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import "tailwindcss";
 
 :root {
   color-scheme: light;
@@ -42,4 +43,125 @@ body {
     padding-bottom: env(safe-area-inset-bottom);
     height: calc(64px + env(safe-area-inset-bottom));
   }
+}
+
+/* =============================== */
+/* Floating Gradient Blobs         */
+/* =============================== */
+.gradient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blob-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #2563EB, transparent 70%);
+  top: -100px;
+  right: -100px;
+  animation: blobFloat1 8s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #7C3AED, transparent 70%);
+  bottom: -80px;
+  left: -80px;
+  animation: blobFloat2 10s ease-in-out infinite;
+}
+
+.blob-3 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, #10B981, transparent 70%);
+  top: 40%;
+  left: 50%;
+  opacity: 0.2;
+  animation: blobFloat3 12s ease-in-out infinite;
+}
+
+@keyframes blobFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, 40px) scale(1.1); }
+  66% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+@keyframes blobFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(1.1); }
+}
+
+@keyframes blobFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-40px, -40px) scale(1.15); }
+}
+
+/* =============================== */
+/* Splash Logo Ring Animation      */
+/* =============================== */
+.splash-logo-ring {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 36px;
+  animation: logoRingPulse 2s ease-in-out infinite;
+}
+
+@keyframes logoRingPulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.15); opacity: 0; }
+}
+
+/* =============================== */
+/* Glassmorphism Utilities         */
+/* =============================== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+}
+
+/* =============================== */
+/* Fade-in Animation Utilities     */
+/* =============================== */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================== */
+/* Skeleton Pulse Animation        */
+/* =============================== */
+.skeleton-pulse {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.5s infinite;
+  border-radius: 12px;
+}
+
+@keyframes skeletonPulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
