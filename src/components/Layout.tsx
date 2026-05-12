@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, BottomNavigation, BottomNavigationAction, Paper, AppBar, Toolbar, Typography, Avatar, IconButton, Badge, Tooltip } from '@mui/material';
+import { Box, BottomNavigation, BottomNavigationAction, Paper, AppBar, Toolbar, Typography, Avatar, IconButton, Badge, Tooltip, Chip } from '@mui/material';
 import { Home, CalendarToday, Notifications, BarChart, Person, SmartToy, DarkMode, LightMode, People } from '@mui/icons-material';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
 import { motion, AnimatePresence } from 'framer-motion';
+import { InboxDrawer } from '../components/Inbox/InboxDrawer';
 
 const Layout: React.FC = () => {
   const navigate = useNavigate();
@@ -136,6 +137,7 @@ const Layout: React.FC = () => {
           ))}
         </BottomNavigation>
       </Paper>
+      <InboxDrawer open={inboxOpen} onClose={() => setInboxOpen(false)} />
     </Box>
   );
 };
