@@ -91,7 +91,7 @@ const SubjectDetailSheet: React.FC<SubjectDetailSheetProps> = ({ course, open, o
                 Lead Faculty
               </Typography>
             </Box>
-          </Stack>
+          </Box>
 
           <Stack direction="row" spacing={2}>
             <Box sx={{ flex: 1, p: 2, bgcolor: 'background.default', borderRadius: 5 }}>
