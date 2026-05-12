@@ -45,15 +45,13 @@ const SubjectDetailSheet: React.FC<SubjectDetailSheetProps> = ({ course, open, o
       anchor="bottom"
       open={open}
       onClose={onClose}
-      PaperProps={{
-        sx: {
-          borderTopLeftRadius: 32,
-          borderTopRightRadius: 32,
-          maxHeight: '90vh',
-          p: 3,
-          bgcolor: 'background.paper',
-          backgroundImage: 'none'
-        }
+      sx={{
+        borderTopLeftRadius: 32,
+        borderTopRightRadius: 32,
+        maxHeight: '90vh',
+        p: 3,
+        bgcolor: 'background.paper',
+        backgroundImage: 'none'
       }}
     >
       <Box sx={{ width: '100%', maxWidth: 600, mx: 'auto' }}>
@@ -95,14 +93,14 @@ const SubjectDetailSheet: React.FC<SubjectDetailSheetProps> = ({ course, open, o
 
           <Stack direction="row" spacing={2}>
             <Box sx={{ flex: 1, p: 2, bgcolor: 'background.default', borderRadius: 5 }}>
-              <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+              <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: 1 }}>
                 <LocationOn sx={{ fontSize: '1.2rem', color: 'primary.main' }} />
                 <Typography variant="caption" sx={{ fontWeight: 800, color: 'text.secondary' }}>ROOM</Typography>
               </Stack>
               <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>{course.location}</Typography>
             </Box>
             <Box sx={{ flex: 1, p: 2, bgcolor: 'background.default', borderRadius: 5 }}>
-              <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+              <Stack direction="row" spacing={1} sx={{ alignItems: 'center', mb: 1 }}>
                 <TrendingUp sx={{ fontSize: '1.2rem', color: 'success.main' }} />
                 <Typography variant="caption" sx={{ fontWeight: 800, color: 'text.secondary' }}>ATTENDANCE</Typography>
               </Stack>

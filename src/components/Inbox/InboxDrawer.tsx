@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, IconButton, Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Paper, Tooltip } from '@mui/material';
+import { Drawer, IconButton, Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Paper, Tooltip, Chip } from '@mui/material';
 import { Close, MoreVert } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MOCK_NOTIFICATIONS } from '../../constants/mockData';
@@ -34,7 +34,7 @@ export const InboxDrawer: React.FC<InboxDrawerProps> = ({ open, onClose }) => {
   };
 
   return (
-    <Drawer anchor="right" open={open} onClose={onClose} PaperProps={{ sx: { width: { xs: '100%', sm: 380 }, bgcolor: 'background.paper' }}}>
+    <Drawer anchor="right" open={open} onClose={onClose} sx={{ width: { xs: '100%', sm: 380 }, bgcolor: 'background.paper' }}>
       <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h6" sx={{ fontWeight: 700 }}>
           Inbox
