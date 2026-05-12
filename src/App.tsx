@@ -18,7 +18,9 @@ import Notifications from './pages/Notifications';
 import Stats from './pages/Stats';
 import Profile from './pages/Profile';
 import Chatbot from './pages/Chatbot';
-import ManageStudents from './pages/ManageStudents';
+import TeacherQR from './pages/TeacherQR';
+import StudentScan from './pages/StudentScan';
+import AttendanceSuccessScreen from './components/ui/AttendanceSuccessScreen';
 
 export default function App() {
   const { themeMode } = useAppStore();
@@ -101,6 +103,14 @@ export default function App() {
               } 
             />
           </Route>
+          {/* QR Attendance routes */}
+          <Route element={<ProtectedRoute allowedRole="teacher"/>}>
+            <Route path="/teacher-qr" element={<TeacherQR/>} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRole="student"/>}>
+            <Route path="/scan" element={<StudentScan/>} />
+          </Route>
+          <Route path="/attendance-success" element={<AttendanceSuccessScreen/>} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
